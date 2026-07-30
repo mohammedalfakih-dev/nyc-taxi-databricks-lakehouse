@@ -1,0 +1,9 @@
+[project]
+name = "c55-data-week-13"
+version = "0.1.0"
+description = "Week 13 Databricks dbt project for the NYC yellow taxi mart"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dbt-databricks>=1.10.0",
+]

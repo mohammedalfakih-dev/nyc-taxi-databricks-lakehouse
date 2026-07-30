@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: nyc_taxi
+    description: Raw NYC yellow taxi trip records and zone lookup on Databricks.
+    database: hyf # Databricks catalog name
+    schema: nyc_yellow
+    tables:
+      - name: raw_trips
+        description: One row per yellow taxi trip, 2023-2025.
+      - name: raw_zones
+        description: NYC taxi zone lookup.
