@@ -1,23 +1,29 @@
-# Task 3 Write-up: Git-backed Job Scheduling
+# Git-backed Job scheduling evidence
 
-## Databricks Job Run URL
+The coursework Job `dev_mohammedalfakih_fct_trips` ran a dbt task from the personal GitHub fork's `main` branch, project directory `task-2`, using `hyf-dbt-warehouse`. Its commands were `dbt deps` followed by `dbt build --select fct_trips`.
 
-Paste the URL of your successful Job run from the Databricks UI address bar:
+## Historical successful run
 
-`https://adb-7405619530719547.7.azuredatabricks.net/jobs/1042517554723103/runs/latest-success?o=7405619530719547`
+The saved screenshot records a **manual run on 30 July 2026**, with Job Run ID `210092009327350`. Its output ends with `PASS=4 WARN=1 ERROR=0`: one incremental model and three tests passed; the tip-ratio test returned 158 warning rows. A successful Job therefore does not imply that every data-quality check was clean.
 
-## Screenshots
+[Recorded run permalink](https://adb-7405619530719547.7.azuredatabricks.net/jobs/1042517554723103/runs/210092009327350?o=7405619530719547) requires access to the original class workspace. It is not a public portfolio demo; screenshots are available below.
 
-Ensure the following screenshot files exist in `task-3/screenshots/`:
+![Historical successful manual run](screenshots/job_run_success.png)
 
-1. `job_config.png` — Showing the dbt task configuration with Git repository URL, branch `main`, path `task-2`, and warehouse `hyf-dbt-warehouse`.
-2. `job_run_success.png` — Showing a successful run log with a green checkmark and stdout execution output.
-3. `job_schedule_paused.png` — Showing the scheduled trigger set to **Paused**.
+## Configuration and Git source
 
-## Orchestration Comparison
+![Historical dbt task configuration](screenshots/job_config.png)
 
-### When would you choose Databricks Jobs versus Apache Airflow for pipeline orchestration?
+![Historical Git repository source configuration](screenshots/job_git_source.png)
 
-Write two to three sentences comparing Databricks Jobs and Apache Airflow in your own words:
+The original screenshot uses the repository's assignment name. After the planned rename, future runs should use the new Git URL. For a fresh target schema, build upstream models too with `dbt build --select +fct_trips`.
 
-`I would use Databricks Jobs when a pipeline mainly runs dbt, SQL, or notebooks in Databricks because scheduling and monitoring stay in the same platform. I would use Apache Airflow when a workflow must coordinate multiple systems or requires more complex dependencies across tools.`
+## Paused trigger
+
+The saved schedule is daily at **06:00 UTC**, with the trigger set to **Paused**. This describes the screenshot, not a newly verified live schedule state.
+
+![Historical paused daily trigger](screenshots/job_schedule_paused.png)
+
+## Databricks Jobs versus Airflow
+
+I would use Databricks Jobs when a pipeline mainly runs dbt, SQL or notebooks in Databricks because scheduling and monitoring stay in the same platform. I would use Apache Airflow when a workflow coordinates multiple systems or needs more complex dependencies across tools.

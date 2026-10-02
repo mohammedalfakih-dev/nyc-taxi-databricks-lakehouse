@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: stg_trips
-    description: "Staging model with one row per NYC Green Taxi trip, built from nyc_taxi.raw_trips. It keeps the columns needed for the borough daily mart and filters rows with missing pickup location or negative fare."
+    description: "Staging model with one retained source record from the normalized yellow-taxi table hyf.nyc_yellow.raw_trips. It keeps the columns needed for the daily borough mart and filters missing pickup locations and negative or NULL fares."
     columns:
       - name: pickup_datetime
         description: "Timestamp when the trip started. Used to derive the pickup date in the mart."

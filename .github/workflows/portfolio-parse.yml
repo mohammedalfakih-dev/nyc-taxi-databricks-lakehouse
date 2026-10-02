@@ -1,0 +1,42 @@
+name: Parse portfolio dbt project
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  parse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: task-2
+    env:
+      DATABRICKS_HOST: offline.invalid
+      DATABRICKS_HTTP_PATH: /sql/1.0/warehouses/offline
+      DATABRICKS_TOKEN: offline-placeholder
+      DBT_SCHEMA: portfolio_parse
+      DBT_SEND_ANONYMOUS_USAGE_STATS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.8.22'
+          python-version: '3.12'
+          enable-cache: true
+      - name: Install original locked environment
+        run: uv sync --frozen
+      - name: Prepare dummy profile outside the checkout
+        run: |
+          mkdir -p "$RUNNER_TEMP/portfolio-dbt-profile"
+          cp profiles.yml.example "$RUNNER_TEMP/portfolio-dbt-profile/profiles.yml"
+      - name: Install dbt package and parse without warehouse access
+        run: |
+          uv run dbt deps --profiles-dir "$RUNNER_TEMP/portfolio-dbt-profile"
+          uv run dbt parse --profiles-dir "$RUNNER_TEMP/portfolio-dbt-profile" --no-partial-parse

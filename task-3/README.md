@@ -1,20 +1,15 @@
-# Task 3: Schedule a Git-backed dbt Job
+# Git-backed Databricks Job
 
-Build on Chapter 5 ([Scheduling dbt Jobs](https://github.com/HackYourFuture/datatrack/blob/main/Data%20Track/Week%2013/week_13__5_scheduling_dbt_jobs.md)) by scheduling your ported dbt project directly from your GitHub repository fork.
+The saved coursework configuration runs dbt from this repository's `main` branch and project directory `task-2`, using `hyf-dbt-warehouse`. [Scheduling details and screenshots](SCHEDULING.md) record a successful manual run and a paused daily trigger.
 
-## Instructions
+To recreate it in your own Databricks workspace:
 
-1. Push your completed `task-2/` dbt project to your GitHub fork of `data-assignment-week-13` on branch `main`.
-2. In Databricks **Workflows** → **Jobs**, create a Job named `dev_yourname_fct_trips`.
-3. Add a `dbt` task type selecting **Git provider** as the source:
-   - **Git repository URL:** `https://github.com/<your_username>/data-assignment-week-13.git`
-   - **Git provider:** `GitHub`
-   - **Git reference:** `main`
-   - **Path / Project directory:** `task-2`
-4. Configure task execution:
-   - **dbt commands:** `dbt deps` followed by `dbt build --select fct_trips`
-   - **SQL warehouse:** `hyf-dbt-warehouse`
-   - **Catalog / Schema:** `hyf` / `dev_yourname`
-5. Click **Run now** and verify that the run completes with a green checkmark.
-6. Add a schedule (for example, daily at 06:00 UTC) and immediately **pause** the trigger.
-7. Fill in `SCHEDULING.md` with your answers and place your screenshots into `task-3/screenshots/`.
+1. Make the source tables and target-schema permissions available; follow [setup](../docs/setup.md).
+2. Create a Job with a dbt task, a Git provider source pointing to your fork, the desired Git reference and project directory `task-2`.
+3. Choose your SQL warehouse and configure your target catalog/schema.
+4. Use `dbt deps`, then `dbt build --select +fct_trips` so a fresh schema also builds the staging views.
+5. Run manually and inspect model/test outcomes before enabling a schedule.
+
+The historical job selected `fct_trips` without `+`; its upstream staging views had already been created. The notebook is a separate exploration and is not a task in that saved dbt Job.
+
+After renaming the GitHub repository, update the Job's Git source to the new URL before running it again. No live Job or schedule is changed by this PR. [Databricks dbt task documentation](https://docs.databricks.com/aws/en/jobs/tasks/dbt).
