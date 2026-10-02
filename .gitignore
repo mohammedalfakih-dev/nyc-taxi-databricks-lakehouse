@@ -16,6 +16,7 @@ logs/
 **/partial_parse.msgpack
 
 # Python
+.venv/
 __pycache__/
 *.py[cod]
 *$py.class

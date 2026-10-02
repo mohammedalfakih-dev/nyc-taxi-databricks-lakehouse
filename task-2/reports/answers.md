@@ -1,5 +1,7 @@
 # Business Question Answers
 
+> Historical Week 10 PostgreSQL answers, retained unchanged below. Before this explanatory note, this file was byte-for-byte identical to the Week 10 answer sheet. Its `fct_daily_borough_stats` table and recorded values are not outputs from the Week 13 Databricks yellow-taxi model. See [current-model query examples](../../docs/queries.sql); no new query results are claimed here.
+
 Queries run against `dev_mohammedalfakih.fct_daily_borough_stats`.
 
 ## Q1: Highest total `total_fare` across the whole loaded dataset

@@ -1,6 +1,6 @@
--- Staging model: one row per NYC green taxi trip (January 2024).
--- Renames source columns, adds derived columns, and filters bad rows.
--- Downstream: fct_daily_borough_stats joins this to stg_zones.
+-- Staging model: one retained source record from hyf.nyc_yellow.raw_trips.
+-- Selects source fields, derives the tip ratio, and applies staging filters.
+-- Downstream: the daily borough mart fct_trips joins this to stg_zones.
 
 SELECT
     pickup_datetime,
